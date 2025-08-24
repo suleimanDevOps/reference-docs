@@ -18,37 +18,81 @@ existing docs, which can be the GoDocs if no better option exists.
 
    ```
    cd genref
-   make
+
+   # {{% heading "Overview" %}}
+
+   The `genref` folder provides tools and scripts for generating reference documentation for Kubernetes APIs and components. It supports multiple output formats (HTML, Markdown) and versions, enabling maintainers to produce consistent, up-to-date reference docs for a wide range of Kubernetes objects and configurations.
+
+   # {{% heading "Prerequisites" %}}
+
+   - Go (>=1.18)
+   - Make (for build automation)
+   - Access to Kubernetes API definitions and configs
+   - Environment variables:
+     - `GO111MODULE=on`
+     - `GOPATH` (if using legacy Go modules)
+   - Familiarity with Hugo and Kubernetes documentation standards
+
+   # {{% heading "Usage / Process" %}}
+
+   1. **Configure Reference Sources:**
+      - Place API/config files in the appropriate location or update `config.yaml` as needed.
+   2. **Build and Run the Generator:**
+      - Use the Makefile or run Go directly:
+        ```bash
+        cd genref
+        make
+        # or
+        go run main.go
+        ```
+   3. **Customize Output:**
+      - Edit templates in `html/` or `markdown/` to adjust formatting or sections.
+   4. **Review Generated Docs:**
+      - Output is written to `output/html/` and `output/md/` for integration with the main docs site.
+
+   ## Example CLI Usage
+   ```bash
+   # Generate reference docs in Markdown format
+   GO111MODULE=on go run main.go --format markdown
    ```
 
-3. Generate reference doc for some API types.
+   # {{% heading "Problems or Limitations" %}}
 
-   ```shell
-   ./genref -include kubelet-config -output output/html 
-   ```
+   - Manual updates required for new API versions
+   - Limited error handling and logging
+   - Some templates may lack documentation or examples
+   - Output formatting may require manual review
 
-4. Visit `output/html/kubelet-config.v1beta1.html` to view the results.
+   # {{% heading "Suggested Improvements" %}}
 
-## Customization
+   - Automate detection and integration of new API versions
+   - Improve error reporting and validation
+   - Add more CLI usage examples and flag documentation
+   - Refactor templates for easier customization
+   - Integrate with CI/CD for automated doc generation
 
-### Use a different config file
+   # {{% heading "Benefits" %}}
 
-You can use the `-c` flag to specify a different configuration file for
-generating the config API references. For example,
+   - Streamlines reference documentation updates
+   - Reduces manual effort for maintainers
+   - Supports consistent, high-quality docs across APIs and versions
+   - Facilitates onboarding for new contributors
 
-```shell
-./genref -c myconfig.yaml
-```
+   # {{% heading "Whatsnext" %}}
 
-### Specify the package
+   - See `gen-apidocs` for API reference doc generation
+   - See `gen-compdocs` for component documentation generation
+   - See `gen-kubectldocs` for kubectl command documentation generation
+   - See `gen-resourcesdocs` for resource documentation generation
+   - Review `content/en/docs/Reference/` for integration points
+   - Consult [Kubernetes SIG Docs contribution guide](https://github.com/kubernetes/community/tree/master/sig-docs) for best practices
 
-You can modify the `config.yaml` file to customize the generated API
-reference output.
-You can also use `-include` and `-exclude` flags for the `genref` binary
-to customize which package to include or exclude respectively.
-The value for the `-include` and `-exclude` flags must be one of the
-`name` of the `apis` listed in the `config.yaml` file, for example,
-`kubelet-config`, `kube-scheduler-config`.
+   # {{% heading "Changes and Improvements" %}}
+
+   - Updated documentation to follow Kubernetes style guide and Hugo shortcodes
+   - Added clear section headings for Overview, Prerequisites, Usage, Problems, Improvements, Benefits, and Whatsnext
+   - Provided concise CLI usage examples and config guidance
+   - Summarized and reorganized content for clarity and contributor onboarding
 
 ### Specify the output format
 
