@@ -1,3 +1,74 @@
+# gen-resourcesdocs
+
+This directory contains tools and scripts for generating resource-level documentation for Kubernetes. It automates extraction, formatting, and organization of resource definitions, configuration examples, and API details across multiple Kubernetes versions.
+
+# {{% heading "Overview" %}}
+
+The `gen-resourcesdocs` folder provides tools and scripts for generating resource-level documentation for Kubernetes. It automates the extraction, formatting, and organization of resource definitions, configuration examples, and API details across multiple Kubernetes versions, supporting maintainers and contributors in keeping resource docs accurate and up to date.
+
+# {{% heading "Prerequisites" %}}
+
+- Go (>=1.18)
+- Make (for build automation)
+- Access to Kubernetes resource API definitions
+- Environment variables:
+  - `GO111MODULE=on`
+  - `GOPATH` (if using legacy Go modules)
+- Familiarity with Hugo and Kubernetes documentation standards
+
+# {{% heading "Usage / Process" %}}
+
+1. **Configure Resource Versions:**
+  - Place version-specific API and config files in the appropriate subfolders under `api/` and `config/`.
+2. **Build and Run the Generator:**
+  - Use the Makefile or run Go directly:
+    ```bash
+    cd gen-resourcesdocs
+    make
+    # or
+    go run cmd/main.go
+    ```
+3. **Customize Output:**
+  - Edit templates in `templates/` or config files to adjust formatting or sections.
+4. **Review Generated Docs:**
+  - Output is typically written to a designated folder for integration with the main docs site.
+
+## Example CLI Usage
+```bash
+# Generate docs for a specific resource version
+GO111MODULE=on go run cmd/main.go --version v1.33
+```
+
+# {{% heading "Problems or Limitations" %}}
+
+- Manual updates required for new resource versions
+- Limited error handling and logging
+- Some config files and templates may lack documentation
+- Output formatting may require manual review
+
+# {{% heading "Suggested Improvements" %}}
+
+- Automate detection and integration of new resource versions
+- Improve error reporting and validation
+- Add more CLI usage examples and flag documentation
+- Refactor templates for easier customization
+- Integrate with CI/CD for automated doc generation
+
+# {{% heading "Benefits" %}}
+
+- Streamlines resource documentation updates
+- Reduces manual effort for maintainers
+- Supports consistent, high-quality docs across resources and versions
+- Facilitates onboarding for new contributors
+
+# {{% heading "Whatsnext" %}}
+
+- See `gen-apidocs` for API reference doc generation
+- See `gen-compdocs` for component documentation generation
+- See `gen-kubectldocs` for kubectl command documentation generation
+- Review `content/en/docs/Reference/` for integration points
+- Consult [Kubernetes SIG Docs contribution guide](https://github.com/kubernetes/community/tree/master/sig-docs) for best practices
+- Explore `genref/` for additional reference doc tooling
 # Kubernetes API resources documentation generator
 
 This tool extracts information from the OpenAPI specification file of the [Kubernetes API](https://github.com/kubernetes/kubernetes/blob/master/api/openapi-spec/swagger.json) and creates documentation in Markdown format, suitable for the [Kubernetes website](https://kubernetes.io/docs/reference/kubernetes-api/).
